@@ -19,16 +19,16 @@
 \Function {ProcessExperiments}{}
 \State $list \gets \text{list of experiments}$
 \State $booleanNetwork \gets \text{boolean network graph and functions}$
-\ForEach {$e_1$, $e_2$ pair of experiments in list}
-\State $res \gets FindValidMerges(e_1, e_2, bn)$
-\State $newList \gets \text{a copy of experiments list}$
-\State \text{add res to top of the list (can be multiple)}
-\State \text{call} $ProcessExperiments(newList, booleanNetwork)$
-\Comment{Backtracking process}
-\EndFor
-
+\State \textbf{begin function}
+    \ForEach {$e_1$, $e_2$ pair of experiments in list}
+        \State $res \gets FindValidMerges(e_1, e_2, bn)$
+        \State $newList \gets \text{a copy of experiments list}$
+        \State \text{add res to top of the list (can be multiple)}
+        \State \text{call} $ProcessExperiments(newList, booleanNetwork)$
+        \Comment{Backtracking process}
+    \EndFor
 \EndFunction
-\Comment{Missing part: how the algorithm finish}
+\State \Comment{Missing part: how the algorithm finish}
 \end{algorithmic}
 \end{algorithm}
 \begin{algorithm}
@@ -37,46 +37,46 @@
 \State $exp1 \gets \text{first experiment}$
 \State $exp2 \gets \text{second experiment}$
 \State $booleanNetwork \gets \text{boolean network graph and functions}$
-\ForEach {s state in exp1}
-\State $mergedExperiment \gets \text{connect s with begin of exp2}$
-\If{\text{IsValidMerge(mergedExperiment, booleanNetwork)}}
+\State \textbf{begin function}
+    \ForEach {s state in exp1}
+        \State $mergedExperiment \gets \text{connect s with begin of exp2}$
+        \If{\text{IsValidMerge(mergedExperiment, booleanNetwork)}}
                 \State \text{add mergedExperiment to returnList }
-\EndIf
-\EndFor
- \ForEach {s state in exp2}
-\State $mergedExperiment \gets \text{connect s with begin of exp1}$
-\If{IsValidMerge(mergedExperiment, booleanNetwork)}
+        \EndIf
+    \EndFor
+    \ForEach {s state in exp2}
+        \State $mergedExperiment \gets \text{connect s with begin of exp1}$
+        \If{IsValidMerge(mergedExperiment, booleanNetwork)}
                 \State \text{add mergedExperiment to returnList }
-            \EndIf
-\EndFor
+        \EndIf
+    \EndFor
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 \begin{algorithm}
 \begin{algorithmic}[1]
 \Function {IsValidMerge}{}
-\State exp \gets \text{an experiment}$
+\State $exp \gets \text{an experiment}$
 \State $booleanNetwork \gets \text{boolean network graph and functions}$
 \State $bdd \gets \text{an new empty BDD}$
 \State \text{Add states values to BDD}
 \State $BDD \gets \text{an empty BDD}$
-\ForEach {\text{s state in experiment}}
-\State BDD \gets \text {BDD AND s}$
-\EndFor
-
-\State functionBDD \gets \text{an empty BDD}$
-\ForEach {\text{v vertex in booleanNetwork}}
-\State incomeEdges \gets \text{income edges to vertex v}$
-\State $availableFunctions \gets \text{available functions for vertex v}$
-\State $functionBDD \gets \text{functionBDD AND CreateFunctionRepresentation(v, availableFunctions, incomeEdges, experiment.length)}$
-\EndFor
-
+\State \textbf{begin function}
+    \ForEach {\text{s state in experiment}}
+        \State $BDD \gets \text {BDD AND s}$
+    \EndFor
+\State $functionBDD \gets \text{an empty BDD}$
+    \ForEach {\text{v vertex in booleanNetwork}}
+        \State $incomeEdges \gets \text{income edges to vertex v}$
+        \State $availableFunctions \gets \text{available functions for vertex v}$
+        \State $functionBDD \gets \text{functionBDD AND CreateFunctionRepresentation(v, availableFunctions, incomeEdges, experiment.length)}$
+    \EndFor
 \State $BDD \gets \text{BDD AND functionBDD}$
 \State $BDD \gets \text{BDD AND 1}$
 \If{BDD is Empty}
-\State \text{return false}
+    \State \text{return false}
 \EndIf
-\State \text{return true}
+    \State \text{return true}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
