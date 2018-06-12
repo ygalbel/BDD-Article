@@ -4,6 +4,9 @@
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 \usepackage{forloop}
+\usepackage{graphicx}
+
+
 \newcounter{ct}
 \newcommand{\markdent}[1]{\forloop{ct}{0}{\value{ct} < #1}{\hspace{\algorithmicindent}}}
 \newcommand{\markcomment}[1]{\Statex\markdent{#1}}
@@ -12,7 +15,13 @@
 \algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
 
 \begin{document}
-
+ \large Intro about re project \\
+ \large BDD Modeling Process \\
+\begin{figure}
+  \includegraphics[ext=.png type=png width=0.2]{ex1.png}
+  \caption{A boat.}
+  \label{fig:boat1}
+\end{figure}
 
 \begin{algorithm} \caption{Process Experiments List}
 \begin{algorithmic}[1]
