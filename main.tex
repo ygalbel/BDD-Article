@@ -6,6 +6,8 @@
 \usepackage{forloop}
 \usepackage{graphicx}
 
+\usepackage{subcaption}
+
 
 \newcounter{ct}
 \newcommand{\markdent}[1]{\forloop{ct}{0}{\value{ct} < #1}{\hspace{\algorithmicindent}}}
@@ -17,12 +19,36 @@
 \begin{document}
  \large Intro about re project \\
  \large BDD Modeling Process \\
-\begin{figure}
-  \includegraphics[ext=.png type=png width=0.2]{ex1.png}
-  \caption{A boat.}
-  \label{fig:boat1}
-\end{figure}
 
+
+     \includegraphics[width=3cm, height=3cm]{ex1.png}
+We can see node A have two positives activators (B, C) and two repressors (D,E). The number inside A mark that A next value is set by two possible functions, function 1 and function 2. In this case function number 1 is “OrNegativeIsTrue” that mean one of all the repressors is activated and Function number 2 is “AndPositiveIsTrue” that mean all activators are needed to be on. 
+Because Node A is controlled by one of this two functions, so we need to put an OR operator between them.
+The observation for this example is:
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{Time} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\ \hline
+0             &            & 0          & 1          & 1          & 1          \\ \hline
+1             & 1          &            &            &            &            \\ \hline
+\end{tabular}
+\end{table}
+Now we have to decide if one of the function of node A can satisfy the observation we take. To perform this, we digital every function with following notation:
+#F2\_A , mean function number 2 is selected function to node A.
+We have to ensure that one (but more than one is right too) of the function will be selected, so we add an “or” function between the two functions.
+To do that we have to calculate the function of A for every t.
+\[  a_1 = 1 \wedge b_0 = 0 \wedge c_0 = 1 \wedge d_0 = 1 \wedge e_0 = 1 \wedge
+
+\\
+(#F_1_a \vee #F_2_A) \wedge
+\\
+((#F_1_a \wedge (e_0 \vee d_0))) \vee 
+\\
+(#F_2_a \wedge (b_0 \wedge c_0))
+ \]
+
+The BDD that will be created for this expression is:
+\includegraphics[width=6cm, height=8cm]{bdd1.png}
 \begin{algorithm} \caption{Process Experiments List}
 \begin{algorithmic}[1]
 \Function {ProcessExperiments}{}
