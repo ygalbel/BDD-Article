@@ -103,7 +103,7 @@ Our solution suggests adding a pre-process step that can merge and union one or 
 A merge from two experiments don’t have to be in same timeslot from the two experiments, because the time in the experiments is not absolute time, but relative time for this specific experiment. Although we assume the all timeslots are from the same length, the experiments don’t have to be with the same length, in some case one experiment will be “shallowed” in second experiment, and in some case the tail of an experiment will continue after merged part. A special case is when that last timeslot of an experiment can be merged to the first timeslot of the second experiment. In this case we will have one long experiment with the value of the first one, and after that the values of the second one.
 
 \large Loop \\
-Another improvement we propose in “re” modeling, is the existence of loops in experiments. Experiments results we have are sometime very long (more than 20 steps), bet there are also with a very low density of data.  That mean Pattern Matching process is very long and need a lot of computation power. In some cases the experiment arrive to “Dead end”. In some experiments from a time slot the results are constant. In “re” process they pass over all the slots. Our algorithm can identify this “Dead end” or “loop” states and recreate a new experiment that will be less long. That will make all the process faster.
+Another improvement we propose in “re” modeling, is the existence of loops in experiments. Experiments results we have are sometime very long (more than 20 steps), but there are also with a very low density of data.  That mean Pattern Matching process is very long and need a lot of computation power. In some cases the experiment arrive to “Dead end”. In some experiments from a time slot the results are constants. In “re” process they pass over all the slots. Our algorithm can identify this “Dead end” or “loop” states and recreate a new experiment that will be less long. That will make all the process faster.
 
 
 \pagebreak
@@ -116,13 +116,19 @@ Another improvement we propose in “re” modeling, is the existence of loops i
 \State \textbf{begin function}
     \ForEach {$e_1$, $e_2$ pair of experiments in list}
         \State $res \gets FindValidMerges(e_1, e_2, bn)$
-        \State $newList \gets \text{a copy of experiments list}$
+        \If{\text{res has values}}
+                \State $newList \gets \text{a copy of experiments list}$
         \State \text{add res to top of the list (can be multiple)}
         \State \text{call} $ProcessExperiments(newList, booleanNetwork)$
-        \Comment{Backtracking process}
+        \EndIf
+        
+        
     \EndFor
+        \If{\text{not any valid merge in list }}
+                \State{Add list to ReusltList}
+        \EndIf
 \EndFunction
-\State \Comment{Missing part: how the algorithm finish}
+
 \end{algorithmic}
 \end{algorithm}
 \begin{algorithm}
@@ -157,7 +163,7 @@ Another improvement we propose in “re” modeling, is the existence of loops i
 \State $BDD \gets \text{an empty BDD}$
 \State \textbf{begin function}
     \ForEach {\text{s state in experiment}}
-        \State $BDD \gets \text {BDD AND s}$
+        \State $BDD \gets \text {BDD $\vee$ s}$
     \EndFor
 \State $functionBDD \gets \text{an empty BDD}$
     \ForEach {\text{v vertex in booleanNetwork}}
