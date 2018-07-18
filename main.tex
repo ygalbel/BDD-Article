@@ -163,7 +163,7 @@ Another improvement we propose in “re” modeling, is the existence of loops i
 \State $BDD \gets \text{an empty BDD}$
 \State \textbf{begin function}
     \ForEach {\text{s state in experiment}}
-        \State $BDD \gets \text {BDD $\vee$ s}$
+        \State $BDD \gets \text {BDD} \wedge \text {s}$
     \EndFor
 \State $functionBDD \gets \text{an empty BDD}$
     \ForEach {\text{v vertex in booleanNetwork}}
@@ -171,8 +171,8 @@ Another improvement we propose in “re” modeling, is the existence of loops i
         \State $availableFunctions \gets \text{available functions for vertex v}$
         \State $functionBDD \gets \text{functionBDD AND CreateFunctionRepresentation(v, availableFunctions, incomeEdges, experiment.length)}$
     \EndFor
-\State $BDD \gets \text{BDD AND functionBDD}$
-\State $BDD \gets \text{BDD AND 1}$
+\State $BDD \gets \text{BDD} \wedge \text {functionBDD}$
+\State $BDD \gets \text{BDD} \wedge \text{1}$
 \If{BDD is Empty}
     \State \text{return false}
 \EndIf
@@ -192,12 +192,12 @@ Another improvement we propose in “re” modeling, is the existence of loops i
     \For{\texttt{i=0;i<length;i++}}
         \State $tempBDD \gets \text{an empty BDD}$
         \ForEach {\text{F function in availableFunctions}}
-            \State $tempBDD \gets \text{tempBDD OR ($f_i$ and $F_i$implementation(edges))}$
+            \State $tempBDD \gets \text{tempBDD} \vee  \text{($f_i$ and $F_i$implementation(edges))}$
             \State \Comment{Missing part: optional parameters}
         \EndFor
-        \State $tempBDD \gets \text{tempBDD AND (f1, f2, .., fn}$
+        \State $tempBDD \gets \text{tempBDD} \wedge \text{ (f1, f2, .., fn}$
         \State \Comment{ensure one of the function has been choosen}
-        \State $functionBDD \gets \text{functionBDD AND $letter_{i+1}$ equal tempBDD}$
+        \State $functionBDD \gets \text{functionBDD} \wedge \text{$letter_{i+1}$ equal tempBDD}$
     \EndFor
     \State \text{return functionBDD}
 \EndFunction
